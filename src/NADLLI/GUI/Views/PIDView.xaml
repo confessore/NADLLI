@@ -1,0 +1,63 @@
+﻿<Window x:ClassModifier="internal" x:Class="NADLLI.GUI.Views.PIDView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NADLLI.GUI.Views"
+        xmlns:vm="clr-namespace:NADLLI.GUI.ViewModels"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="300" Width="250" ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:PIDViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            Text="Search" />
+        <TextBox
+            Grid.Row="0"
+            Grid.Column="1" 
+            Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"/>
+        <ListView
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Height="150"
+            ItemsSource="{Binding PIDs}"
+            SelectedItem="{Binding SelectedPID}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="150" Header="ProcessName" DisplayMemberBinding="{Binding ProcessName}" />
+                    <GridViewColumn Width="50" Header="PID" DisplayMemberBinding="{Binding Id}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Content="Refresh"
+            Command="{Binding RefreshAsyncCommand}" />
+        <Button
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+            Command="{Binding ChooseDllAsyncCommand}" />
+        <Button
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Content="Inject"
+            Command="{Binding InjectAsyncCommand}" />
+    </Grid>
+</Window>
